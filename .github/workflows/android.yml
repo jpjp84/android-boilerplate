@@ -17,11 +17,10 @@ jobs:
           java-version: 1.8
       - name: Unit tests
         run: bash ./gradlew test --stacktrace
-
   build:
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v2
-    - uses: malinskiy/action-android/install-sdk@release/0.0.5
-    - name: Build with Gradle
-      run: ./gradlew build
+      - uses: actions/checkout@v2
+      - uses: malinskiy/action-android/install-sdk@release/0.0.5
+      - name: Build with Gradle
+        run: ./gradlew build
