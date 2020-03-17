@@ -27,13 +27,6 @@ jobs:
       - name: Build Release APK with Gradle
         run: ./gradlew assembleRelease
 
-      - name: Releasing Debug APK using Hub
-        uses: ShaunLWM/action-release-debugapk@master
-        env:
-          GITHUB_TOKEN: ${{ secrets.TOKEN }}
-          APP_FOLDER: app
-          RELEASE_TITLE: BarberApp
-
       - name: Signing and Releasing Release APK using Hub
         uses: r0adkll/sign-android-release@v1
         with:
