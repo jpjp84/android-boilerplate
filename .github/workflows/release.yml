@@ -8,11 +8,37 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
-    steps:
-      - uses: r0adkll/sign-android-release@v1
-        with:
-          releaseDirectory: ./app
-          signingKeyBase64: ${{ secrets.SIGNING_KEY }}
-          alias: ${{ secrets.ALIAS }}
-          keyStorePassword: ${{ secrets.KEY_STORE_PASSWORD }}
-          keyPassword: ${{ secrets.KEY_PASSWORD }}
+      steps:
+        - uses: actions/checkout@v1
+        - name: set up JDK 1.8
+          uses: actions/setup-java@v1
+          with:
+            java-version: 1.8
+
+        - name: Grant rights
+          run: chmod +x build.gradle
+
+        - name: Build project with Gradle
+          run: ./gradlew build
+
+        - name: Build Debug APK with Gradle
+          run: ./gradlew assembleDebug
+
+        - name: Build Release APK with Gradle
+          run: ./gradlew assembleRelease
+
+        - name: Releasing Debug APK using Hub
+          uses: ShaunLWM/action-release-debugapk@master
+          env:
+            GITHUB_TOKEN: ${{ secrets.TOKEN }}
+            APP_FOLDER: app
+            RELEASE_TITLE: BarberApp
+
+        - name: Signing and Releasing Release APK using Hub
+          uses: r0adkll/sign-android-release@v1
+          with:
+            releaseDirectory: ./app/build/outputs/apk/release
+            signingKeyBase64: ${{ secrets.SIGNING_KEY }}
+            alias: ${{ secrets.ALIAS }}
+            keyStorePassword: ${{ secrets.KEY_STORE_PASSWORD }}
+            keyPassword: ${{ secrets.KEY_PASSWORD }}
