@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">AndroidBoilerplate</string>
+    <string name="not-use">not use string</string>
 </resources>
