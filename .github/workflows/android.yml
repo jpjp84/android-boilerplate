@@ -6,28 +6,13 @@ on:
       - master
       - feature/*
 jobs:
-  lint:
-    name: Lint Check
-    runs-on: ubuntu-18.04
-    container: mobileposse/dev:latest
-    steps:
-      - uses: actions/checkout@v2
-      - uses: malinskiy/action-android/install-sdk@release/0.0.5
-      - name: Lint
-          uses: mobileposse/github-android-lint-action@v1
-          with:
-            repo_token: ${{ secrets.GITHUB_TOKEN }}
-            filename: 'gradle-lint-result'
-            exclude: 'MissingTranslation'
-            report_name: 'Gradle Lint Results'
-      - name: Lint Check
-        run: ./gradlew lint
   build:
-    name: Test And Build
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
       - uses: malinskiy/action-android/install-sdk@release/0.0.5
+      - name: Lint Check
+        run: ./gradlew lint
       - name: Unit tests
         run: ./gradlew test --stacktrace
       - name: Build with Gradle
