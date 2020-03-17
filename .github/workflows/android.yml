@@ -7,12 +7,12 @@ on:
       - feature/*
 jobs:
   lint:
-    name: Run Unit Tests
+    name: Lint Check
     runs-on: ubuntu-18.04
     steps:
       - uses: actions/checkout@v2
       - uses: malinskiy/action-android/install-sdk@release/0.0.5
-      - name: Unit tests
+      - name: Lint Check
         run: ./gradlew lint
   test:
     name: Run Unit Tests
