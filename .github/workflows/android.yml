@@ -6,26 +6,15 @@ on:
       - master
       - feature/*
 jobs:
-  lint:
-    name: Lint Check
-    runs-on: ubuntu-18.04
+  build:
+    name: Test And Build
+    runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
       - uses: malinskiy/action-android/install-sdk@release/0.0.5
       - name: Lint Check
         run: ./gradlew lint
-  test:
-    name: Run Unit Tests
-    runs-on: ubuntu-18.04
-    steps:
-      - uses: actions/checkout@v2
-      - uses: malinskiy/action-android/install-sdk@release/0.0.5
       - name: Unit tests
         run: ./gradlew test --stacktrace
-  build:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v2
-      - uses: malinskiy/action-android/install-sdk@release/0.0.5
       - name: Build with Gradle
         run: ./gradlew build
