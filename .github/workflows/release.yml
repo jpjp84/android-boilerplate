@@ -14,19 +14,10 @@ jobs:
         uses: actions/setup-java@v1
         with:
           java-version: 1.8
-
       - name: Grant rights
         run: chmod +x build.gradle
-
       - name: Build project with Gradle
         run: ./gradlew build
-
-      - name: Build Debug APK with Gradle
-        run: ./gradlew assembleDebug
-
-      - name: Build Release APK with Gradle
-        run: ./gradlew assembleRelease
-
       - name: Signing and Releasing Release APK using Hub
         uses: r0adkll/sign-android-release@v1
         with:
@@ -35,3 +26,27 @@ jobs:
           alias: ${{ secrets.ALIAS }}
           keyStorePassword: ${{ secrets.KEY_STORE_PASSWORD }}
           keyPassword: ${{ secrets.KEY_PASSWORD }}
+      - name: Create Release
+        id: create_release
+        uses: actions/create-release@latest
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} # This token is provided by Actions, you do not need to create your own token
+        with:
+          tag_name: ${{ github.ref }}
+          release_name: Release ${{ github.ref }}
+          body: |
+            Changes in this Release
+            - First Change
+            - Second Change
+          draft: false
+          prerelease: false
+      - name: Upload Release Asset
+        id: upload-release-asset
+        uses: actions/upload-release-asset@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          upload_url: ${{ steps.create_release.outputs.upload_url }} # This pulls from the CREATE RELEASE step above, referencing it's ID to get its outputs object, which include a `upload_url`. See this blog post for more info: https://jasonet.co/posts/new-features-of-github-actions/#passing-data-to-future-steps
+          asset_path: ${{ SIGNED_RELEASE_FILE }}
+          asset_name: my.apk
+          asset_content_type: application/vnd.android.package-archive
