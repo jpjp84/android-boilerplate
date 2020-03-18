@@ -38,7 +38,6 @@ jobs:
           body: |
             Changes in this Release
             - First Change
-            - Second Change
           draft: true
           prerelease: false
       - name: Upload Release Asset
