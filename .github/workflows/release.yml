@@ -18,7 +18,7 @@ jobs:
         run: chmod +x build.gradle
       - name: Build project with Gradle
         run: ./gradlew build
-      - name: Signing and Releasing Release APK using Hub
+      - name: Create Signed APK
         id: create_signed_apk
         uses: r0adkll/sign-android-release@v1
         with:
