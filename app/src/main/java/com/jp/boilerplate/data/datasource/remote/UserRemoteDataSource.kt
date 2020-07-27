@@ -1,7 +1,7 @@
 package com.jp.boilerplate.data.datasource.remote
 
 import com.jp.boilerplate.data.datasource.UserDataSource
-import com.jp.boilerplate.data.datasource.api.UserAPI
+import com.jp.boilerplate.data.meta.api.UserAPI
 import com.jp.boilerplate.data.entity.User
 import com.jp.boilerplate.util.NetworkUtil
 import io.reactivex.Completable

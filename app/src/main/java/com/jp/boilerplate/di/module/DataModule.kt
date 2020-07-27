@@ -1,7 +1,7 @@
 package com.jp.boilerplate.di.module
 
 import android.content.Context
-import com.jp.boilerplate.data.UserRepositoryImpl
+import com.jp.boilerplate.data.repository.UserRepositoryImpl
 import com.jp.boilerplate.data.datasource.UserDataSource
 import com.jp.boilerplate.data.datasource.local.UserLocalDataSource
 import com.jp.boilerplate.data.datasource.remote.UserRemoteDataSource

@@ -1,4 +1,4 @@
-package com.jp.boilerplate.data
+package com.jp.boilerplate.data.repository
 
 import com.jp.boilerplate.data.datasource.UserDataSource
 import com.jp.boilerplate.data.entity.User

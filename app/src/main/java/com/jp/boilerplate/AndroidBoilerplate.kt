@@ -1,7 +1,8 @@
 package com.jp.boilerplate
 
-import androidx.multidex.MultiDex
 import com.jp.boilerplate.di.component.DaggerAppComponent
+import com.orhanobut.logger.AndroidLogAdapter
+import com.orhanobut.logger.Logger
 import dagger.android.AndroidInjector
 import dagger.android.support.DaggerApplication
 
@@ -12,6 +13,6 @@ open class AndroidBoilerplate : DaggerApplication() {
 
     override fun onCreate() {
         super.onCreate()
-        MultiDex.install(this)
+        Logger.addLogAdapter(AndroidLogAdapter())
     }
 }

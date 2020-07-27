@@ -1,4 +1,4 @@
-package com.jp.boilerplate.data.datasource.api
+package com.jp.boilerplate.data.meta.api
 
 import com.jp.boilerplate.data.entity.User
 import io.reactivex.Flowable
