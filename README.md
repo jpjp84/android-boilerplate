@@ -5,12 +5,6 @@
 - mvvm-hilt
   - Dagger2 -> HILT
 
-### Using
-- Kotlin
-- Dagger2
-- Retrofit, OkHttp
-- RxJava, RxKotlin(Rx2)
-
 ### Action
 - feature/*, master : unit test, lint, build action
 - push 'v*' tags : signed apk, create release and upload signed apk
