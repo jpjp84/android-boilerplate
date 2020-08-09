@@ -1,6 +1,9 @@
 # android-boilerplate
 > [프로젝트 관련 Page](https://www.notion.so/Kotlin-for-Android-b4424a4b78f24f1e9c2908707d1bf227)
 
+### Branchs
+- mvvm-hilt
+  - Dagger2 -> HILT
 
 ### Using
 - Kotlin
@@ -11,11 +14,6 @@
 ### Action
 - feature/*, master : unit test, lint, build action
 - push 'v*' tags : signed apk, create release and upload signed apk
-
-### Todo
-- [ ] Test코드 작성
-- [ ] Rx3 Tracking 하기
-- [ ] Sample Project 만들어 보기
 
 ### Concept Project
 - [Android Architecture Sample](https://github.com/android/architecture-samples/tree/dagger-android)
