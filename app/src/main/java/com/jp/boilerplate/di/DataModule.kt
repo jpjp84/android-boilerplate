@@ -1,4 +1,4 @@
-package com.jp.boilerplate.di.module
+package com.jp.boilerplate.di
 
 import android.content.Context
 import com.jp.boilerplate.data.repository.UserRepositoryImpl
@@ -9,29 +9,28 @@ import com.jp.boilerplate.data.repository.UserRepository
 import dagger.Binds
 import dagger.Module
 import dagger.Provides
+import dagger.hilt.InstallIn
+import dagger.hilt.android.components.ApplicationComponent
+import dagger.hilt.android.qualifiers.ApplicationContext
 import javax.inject.Singleton
 
-@Module(includes = [RepositoryBindModule::class])
+@Module
+@InstallIn(ApplicationComponent::class)
 object DataModule {
 
-    @JvmStatic
     @Singleton
     @Provides
     @AppModule.LocalDataSource
-    fun bindLocalUserDataSource(context: Context): UserDataSource {
-        return UserLocalDataSource(context)
-    }
+    fun bindLocalUserDataSource(@ApplicationContext context: Context): UserDataSource = UserLocalDataSource(context)
 
-    @JvmStatic
     @Singleton
     @Provides
     @AppModule.RemoteDataSource
-    fun bindRemoteUserDataSource(): UserDataSource {
-        return UserRemoteDataSource()
-    }
+    fun bindRemoteUserDataSource(): UserDataSource = UserRemoteDataSource()
 }
 
 @Module
+@InstallIn(ApplicationComponent::class)
 abstract class RepositoryBindModule {
 
     @Singleton

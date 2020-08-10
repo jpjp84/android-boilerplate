@@ -2,24 +2,15 @@ package com.jp.boilerplate.ui.base
 
 import android.os.Bundle
 import androidx.annotation.LayoutRes
+import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import androidx.databinding.ViewDataBinding
 import androidx.lifecycle.ViewModel
-import androidx.lifecycle.ViewModelProvider
 import com.jp.boilerplate.BR
-import dagger.android.support.DaggerAppCompatActivity
-import javax.inject.Inject
 
-abstract class BaseActivity<VM : ViewModel, VB : ViewDataBinding> : DaggerAppCompatActivity() {
+abstract class BaseActivity<VM : ViewModel, VB : ViewDataBinding> : AppCompatActivity() {
 
-    @Inject
-    lateinit var viewModelFactory: ViewModelProvider.Factory
-
-    abstract fun getViewModelClass(): Class<VM>
-
-    protected val viewModel by lazy {
-        ViewModelProvider(this, viewModelFactory).get(getViewModelClass())
-    }
+    protected abstract val viewModel: VM
 
     @LayoutRes
     abstract fun getViewLayoutRes(): Int
@@ -32,7 +23,7 @@ abstract class BaseActivity<VM : ViewModel, VB : ViewDataBinding> : DaggerAppCom
         viewBinding = DataBindingUtil.setContentView(this, getViewLayoutRes())
         viewBinding.apply {
             this.setVariable(BR.viewModel, viewModel)
-            viewBinding.lifecycleOwner = this@BaseActivity
+            viewBinding.lifecycleOwner = this.lifecycleOwner
             this.executePendingBindings()
         }
     }

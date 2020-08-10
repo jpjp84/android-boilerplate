@@ -1,15 +1,12 @@
 package com.jp.boilerplate
 
-import com.jp.boilerplate.di.component.DaggerAppComponent
+import android.app.Application
 import com.orhanobut.logger.AndroidLogAdapter
 import com.orhanobut.logger.Logger
-import dagger.android.AndroidInjector
-import dagger.android.support.DaggerApplication
+import dagger.hilt.android.HiltAndroidApp
 
-open class AndroidBoilerplate : DaggerApplication() {
-    override fun applicationInjector(): AndroidInjector<out DaggerApplication> {
-        return DaggerAppComponent.factory().create(applicationContext)
-    }
+@HiltAndroidApp
+open class AndroidBoilerplate : Application() {
 
     override fun onCreate() {
         super.onCreate()
