@@ -1,4 +1,4 @@
-package com.jp.boilerplate.ui.main
+package com.jp.boilerplate.ui.home
 
 import android.util.Log
 import androidx.hilt.lifecycle.ViewModelInject
@@ -7,10 +7,9 @@ import androidx.lifecycle.MutableLiveData
 import com.jp.boilerplate.data.entity.User
 import com.jp.boilerplate.data.repository.UserRepository
 import com.jp.boilerplate.ui.base.BaseViewModel
-import javax.inject.Inject
 
 
-class MainViewModel @ViewModelInject constructor(
+class HomeViewModel @ViewModelInject constructor(
     private val userRepository: UserRepository
 ) : BaseViewModel() {
 

@@ -1,4 +1,4 @@
-package com.jp.babyfood.ui.base
+package com.jp.boilerplate.ui.base
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -7,22 +7,13 @@ import android.view.ViewGroup
 import androidx.annotation.LayoutRes
 import androidx.databinding.DataBindingUtil
 import androidx.databinding.ViewDataBinding
+import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModel
-import androidx.lifecycle.ViewModelProvider
 import com.jp.boilerplate.BR
-import dagger.android.support.DaggerFragment
-import javax.inject.Inject
 
-abstract class BaseFragment<VM : ViewModel, VB : ViewDataBinding> : DaggerFragment() {
+abstract class BaseFragment<VM : ViewModel, VB : ViewDataBinding> : Fragment() {
 
-    @Inject
-    lateinit var viewModelFactory: ViewModelProvider.Factory
-
-    abstract fun getViewModelClass(): Class<VM>
-
-    protected val viewModel by lazy {
-        ViewModelProvider(this, viewModelFactory).get(getViewModelClass())
-    }
+    protected abstract val viewModel: VM
 
     @LayoutRes
     abstract fun getViewLayoutRes(): Int

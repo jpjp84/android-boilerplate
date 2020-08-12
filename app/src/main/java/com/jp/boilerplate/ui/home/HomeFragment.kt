@@ -1,18 +1,18 @@
-package com.jp.boilerplate.ui.main
+package com.jp.boilerplate.ui.home
 
 import android.os.Bundle
-import androidx.activity.viewModels
+import androidx.fragment.app.viewModels
+import com.jp.boilerplate.ui.base.BaseFragment
 import com.jp.boilerplate.R
 import com.jp.boilerplate.databinding.ActivityMainBinding
-import com.jp.boilerplate.ui.base.BaseActivity
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class MainActivity : BaseActivity<MainViewModel, ActivityMainBinding>() {
+class HomeFragment : BaseFragment<HomeViewModel, ActivityMainBinding>() {
 
-    override val viewModel by viewModels<MainViewModel>()
+    override val viewModel by viewModels<HomeViewModel>()
 
-    override fun getViewLayoutRes() = R.layout.activity_main
+    override fun getViewLayoutRes() = R.layout.fragment_home
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

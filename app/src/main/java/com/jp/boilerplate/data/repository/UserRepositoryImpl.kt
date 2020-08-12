@@ -2,14 +2,11 @@ package com.jp.boilerplate.data.repository
 
 import com.jp.boilerplate.data.datasource.UserDataSource
 import com.jp.boilerplate.data.entity.User
-import com.jp.boilerplate.data.repository.UserRepository
-import com.jp.boilerplate.di.module.AppModule
 import io.reactivex.Flowable
-import javax.inject.Inject
 
-class UserRepositoryImpl @Inject constructor(
-    @AppModule.LocalDataSource private val userLocalDataSource: UserDataSource,
-    @AppModule.RemoteDataSource private val userRemoteDataSource: UserDataSource
+class UserRepositoryImpl constructor(
+    private val userLocalDataSource: UserDataSource,
+    private val userRemoteDataSource: UserDataSource
 ) : UserRepository {
 
     private var user: User? = null
