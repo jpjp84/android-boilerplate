@@ -21,7 +21,8 @@ object DataModule {
     @Singleton
     @Provides
     @AppModule.LocalDataSource
-    fun bindLocalUserDataSource(@ApplicationContext context: Context): UserDataSource = UserLocalDataSource(context)
+    fun bindLocalUserDataSource(@ApplicationContext context: Context): UserDataSource =
+        UserLocalDataSource(context)
 
     @Singleton
     @Provides
@@ -31,9 +32,12 @@ object DataModule {
 
 @Module
 @InstallIn(ApplicationComponent::class)
-abstract class RepositoryBindModule {
+object RepositoryBindModule {
 
     @Singleton
-    @Binds
-    abstract fun bindRepository(userRepository: UserRepositoryImpl): UserRepository
+    @Provides
+    fun bindRepository(
+        @AppModule.LocalDataSource userLocalDataSource: UserDataSource,
+        @AppModule.RemoteDataSource userRemoteDataSource: UserDataSource
+    ): UserRepository = UserRepositoryImpl(userLocalDataSource, userRemoteDataSource)
 }
