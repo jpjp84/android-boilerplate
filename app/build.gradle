@@ -38,7 +38,6 @@ android {
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
-    implementation "androidx.multidex:multidex:$androidx.multidex"
     implementation "androidx.appcompat:appcompat:$androidx.appCompat"
     implementation "androidx.core:core-ktx:$androidx.core"
     implementation "androidx.constraintlayout:constraintlayout:$androidx.constraintLayout"
@@ -49,20 +48,17 @@ dependencies {
     implementation "androidx.activity:activity:$androidx.activityVersion"
     implementation "androidx.activity:activity-ktx:$androidx.activityKtx"
 
-    // HILT
-    implementation "com.google.dagger:hilt-android:2.28.1-alpha"
-    kapt "com.google.dagger:hilt-android-compiler:2.28-alpha"
-    // HILT-VIEWMODEL AND KOTLIN ANNOTATION PROCESSOR
-    implementation 'androidx.hilt:hilt-lifecycle-viewmodel:1.0.0-alpha02'
-    kapt 'androidx.hilt:hilt-compiler:1.0.0-alpha02'
+    // Room
+    implementation "androidx.room:room-runtime:$androidx.room"
+    kapt "androidx.room:room-compiler:$androidx.room"
+    implementation "androidx.room:room-ktx:$androidx.room"
 
-    // Dagger
-    implementation "com.google.dagger:dagger:$daggerVersion"
-    implementation 'androidx.navigation:navigation-fragment-ktx:2.3.0'
-    implementation 'androidx.navigation:navigation-ui-ktx:2.3.0'
-    kapt "com.google.dagger:dagger-compiler:$daggerVersion"
-    implementation "com.google.dagger:dagger-android-support:$daggerVersion"
-    kapt "com.google.dagger:dagger-android-processor:$daggerVersion"
+    // HILT
+    implementation "com.google.dagger:hilt-android:$daggerHilt.android"
+    kapt "com.google.dagger:hilt-android-compiler:$daggerHilt.android"
+    // HILT-VIEWMODEL AND KOTLIN ANNOTATION PROCESSOR
+    implementation "androidx.hilt:hilt-lifecycle-viewmodel:$daggerHilt.androidx"
+    kapt "androidx.hilt:hilt-compiler:$daggerHilt.androidx"
 
     //Retrofit
     implementation "com.squareup.retrofit2:retrofit:$retrofitVersion"
