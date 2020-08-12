@@ -12,5 +12,5 @@ interface UserAPI {
         "content-type: application/json"
     )
     @GET("user.json")
-    fun getUser(): Flowable<User>
+    fun getUser(): User
 }
