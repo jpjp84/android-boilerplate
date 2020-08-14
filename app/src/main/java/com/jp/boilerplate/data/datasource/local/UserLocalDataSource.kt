@@ -1,35 +1,36 @@
 package com.jp.boilerplate.data.datasource.local
 
-import android.content.Context
-import android.text.TextUtils
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.map
 import com.jp.boilerplate.data.datasource.UserDataSource
 import com.jp.boilerplate.data.entity.User
-import com.jp.boilerplate.util.SharedPrefUtil
-import io.reactivex.Completable
-import io.reactivex.Flowable
-import io.reactivex.Single
+import com.jp.boilerplate.data.meta.Result
+import com.jp.boilerplate.data.meta.db.UserDao
+import kotlinx.coroutines.CoroutineDispatcher
+import kotlinx.coroutines.Dispatchers
 
 class UserLocalDataSource constructor(
-    private val context: Context
+    private val userDao: UserDao,
+    private val ioDispatcher: CoroutineDispatcher = Dispatchers.IO
 ) : UserDataSource {
 
-    override fun getUser(): Flowable<User> {
-        return Flowable.defer {
-            Flowable.just(SharedPrefUtil.get<User>(context, "user"))
-        }
+    override fun observeUser(): LiveData<Result<User>> {
+        return userDao.observable().map { Result.Success(it) }
     }
 
-    override fun isCached(): Single<Boolean> {
-        return Single.defer {
-            Single.just(!TextUtils.isEmpty(SharedPrefUtil.get(context, "user")))
-        }
+    override suspend fun get(): User {
+        return userDao.select()
     }
 
-    override fun save(it: User): Completable {
-        return Completable.defer {
-            SharedPrefUtil.save(context, "user", it)
+    override suspend fun isCached(): Boolean = try {
+        get()
+        true
+    } catch (e: Exception) {
+        false
+    }
 
-            Completable.complete()
-        }
+    override suspend fun set(it: User): User {
+        userDao.insert(it)
+        return it
     }
 }

@@ -1,10 +1,13 @@
 package com.jp.boilerplate.di
 
 import android.content.Context
+import androidx.room.Room
 import com.jp.boilerplate.data.repository.UserRepositoryImpl
 import com.jp.boilerplate.data.datasource.UserDataSource
 import com.jp.boilerplate.data.datasource.local.UserLocalDataSource
 import com.jp.boilerplate.data.datasource.remote.UserRemoteDataSource
+import com.jp.boilerplate.data.meta.db.AppDB
+import com.jp.boilerplate.data.meta.db.UserDao
 import com.jp.boilerplate.data.repository.UserRepository
 import dagger.Binds
 import dagger.Module
@@ -20,14 +23,24 @@ object DataModule {
 
     @Singleton
     @Provides
+    fun provideDataBase(@ApplicationContext context: Context): AppDB {
+        return Room.databaseBuilder(
+            context.applicationContext,
+            AppDB::class.java,
+            "boilerplate.db"
+        ).build()
+    }
+
+    @Singleton
+    @Provides
     @AppModule.LocalDataSource
-    fun bindLocalUserDataSource(@ApplicationContext context: Context): UserDataSource =
-        UserLocalDataSource(context)
+    fun provideLocalUserDataSource(appDb: AppDB): UserDataSource =
+        UserLocalDataSource(appDb.userDao())
 
     @Singleton
     @Provides
     @AppModule.RemoteDataSource
-    fun bindRemoteUserDataSource(): UserDataSource = UserRemoteDataSource()
+    fun provideRemoteUserDataSource(): UserDataSource = UserRemoteDataSource()
 }
 
 @Module
@@ -36,7 +49,7 @@ object RepositoryBindModule {
 
     @Singleton
     @Provides
-    fun bindRepository(
+    fun provideRepository(
         @AppModule.LocalDataSource userLocalDataSource: UserDataSource,
         @AppModule.RemoteDataSource userRemoteDataSource: UserDataSource
     ): UserRepository = UserRepositoryImpl(userLocalDataSource, userRemoteDataSource)

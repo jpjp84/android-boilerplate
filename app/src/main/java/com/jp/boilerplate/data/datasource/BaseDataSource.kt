@@ -1,12 +1,12 @@
 package com.jp.boilerplate.data.datasource
 
 import com.jp.boilerplate.data.entity.User
-import io.reactivex.Completable
-import io.reactivex.Single
 
-interface BaseDataSource {
+interface BaseDataSource<T> {
 
-    fun isCached(): Single<Boolean>
+    suspend fun get(): T
 
-    fun save(it: User): Completable
+    suspend fun isCached(): Boolean
+
+    suspend fun set(it: T): User
 }

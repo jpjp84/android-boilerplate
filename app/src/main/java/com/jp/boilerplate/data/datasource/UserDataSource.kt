@@ -1,9 +1,11 @@
 package com.jp.boilerplate.data.datasource
 
+import androidx.lifecycle.LiveData
 import com.jp.boilerplate.data.entity.User
-import io.reactivex.Flowable
+import com.jp.boilerplate.data.meta.Result
 
-interface UserDataSource : BaseDataSource {
+interface UserDataSource : BaseDataSource<User> {
 
-    fun getUser(): Flowable<User>
+    fun observeUser(): LiveData<Result<User>>
+
 }
