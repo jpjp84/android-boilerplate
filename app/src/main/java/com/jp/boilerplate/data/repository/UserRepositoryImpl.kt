@@ -1,35 +1,42 @@
 package com.jp.boilerplate.data.repository
 
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.distinctUntilChanged
+import androidx.lifecycle.liveData
+import androidx.lifecycle.map
 import com.jp.boilerplate.data.datasource.UserDataSource
 import com.jp.boilerplate.data.entity.User
-import com.jp.boilerplate.data.repository.UserRepository
-import com.jp.boilerplate.di.module.AppModule
-import io.reactivex.Flowable
-import javax.inject.Inject
+import com.jp.boilerplate.data.meta.Result
+import kotlinx.coroutines.Dispatchers
 
-class UserRepositoryImpl @Inject constructor(
-    @AppModule.LocalDataSource private val userLocalDataSource: UserDataSource,
-    @AppModule.RemoteDataSource private val userRemoteDataSource: UserDataSource
+class UserRepositoryImpl constructor(
+    private val userLocalDataSource: UserDataSource,
+    private val userRemoteDataSource: UserDataSource
 ) : UserRepository {
 
-    private var user: User? = null
+    override fun observable(): LiveData<User> = userLocalDataSource.observeUser().distinctUntilChanged().map { it }
 
-    override fun getUser(forceUpdate: Boolean): Flowable<User> {
-        return userLocalDataSource.isCached()
-            .flatMapPublisher {
-                if (forceUpdate || !it) {
-                    userRemoteDataSource.getUser()
-                } else {
-                    userLocalDataSource.getUser()
-                }
+    override fun refreshUser(forceUpdate: Boolean): LiveData<Result<Void>> = liveData(Dispatchers.IO) {
+        try {
+            if (forceUpdate) {
+                emit(Result.loading())
+                updateUserByRemote()
             }
-            .flatMap {
-                user = it
-                userLocalDataSource.save(it).toSingle { it }.toFlowable()
-            }
+            emit(Result.success())
+        } catch (e: Exception) {
+            emit(Result.error(e.message!!))
+        }
     }
 
-    override fun isAdult(): Boolean {
-        return user?.age!! > 19
+    private suspend fun updateUserByRemote() {
+        userRemoteDataSource.get().also {
+            userLocalDataSource.set(it)
+        }
+    }
+
+    override suspend fun setUser(user: User) {
+        userRemoteDataSource.set(user).also {
+            userLocalDataSource.set(it)
+        }
     }
 }

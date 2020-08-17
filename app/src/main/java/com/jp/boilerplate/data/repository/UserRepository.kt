@@ -1,11 +1,14 @@
 package com.jp.boilerplate.data.repository
 
+import androidx.lifecycle.LiveData
 import com.jp.boilerplate.data.entity.User
-import io.reactivex.Flowable
+import com.jp.boilerplate.data.meta.Result
 
 interface UserRepository {
 
-    fun getUser(forceUpdate: Boolean): Flowable<User>
+    fun observable(): LiveData<User>
 
-    fun isAdult(): Boolean
+    fun refreshUser(forceUpdate: Boolean): LiveData<Result<Void>>
+
+    suspend fun setUser(user: User)
 }
