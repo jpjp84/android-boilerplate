@@ -4,12 +4,10 @@ import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.switchMap
-import androidx.lifecycle.viewModelScope
 import com.jp.boilerplate.data.entity.User
+import com.jp.boilerplate.data.meta.Result
 import com.jp.boilerplate.data.repository.UserRepository
 import com.jp.boilerplate.ui.base.BaseViewModel
-import com.orhanobut.logger.Logger
-import kotlinx.coroutines.launch
 
 
 class HomeViewModel @ViewModelInject constructor(
@@ -17,21 +15,13 @@ class HomeViewModel @ViewModelInject constructor(
 ) : BaseViewModel() {
 
     private val _forceUpdateUser = MutableLiveData<Boolean>(false)
-    private val _user = _forceUpdateUser.switchMap { forceUpdate ->
-        userRepository.getUser(forceUpdate)
-    }
+    private val _dataLoading = _forceUpdateUser.switchMap { userRepository.refreshUser(it) }
+    val dataLoading: LiveData<Result<Void>> = _dataLoading
+
+    private val _user = userRepository.observable()
     val user: LiveData<User> = _user
 
     init {
-        _forceUpdateUser.value = false
-        viewModelScope.launch {
-//            userRepository.setUser(User(name = "jp", age = 15))
-        }
-
+        _forceUpdateUser.value = true
     }
-
-    fun updateUser() {
-//        _forceUpdateUser.value = true
-    }
-
 }

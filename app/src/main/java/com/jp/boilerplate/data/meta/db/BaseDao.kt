@@ -8,7 +8,7 @@ import io.reactivex.Single
 
 interface BaseDao<T> {
 
-    @Insert(onConflict = OnConflictStrategy.IGNORE)
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insert(t: T)
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)

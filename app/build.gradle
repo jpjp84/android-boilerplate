@@ -65,10 +65,10 @@ dependencies {
     kapt "androidx.hilt:hilt-compiler:$daggerHilt.androidx"
 
     //Retrofit
-    implementation "com.squareup.retrofit2:retrofit:$retrofitVersion"
-    implementation "com.squareup.retrofit2:converter-gson:$retrofitVersion"
-    implementation "com.squareup.retrofit2:adapter-rxjava2:$retrofitVersion"
-    implementation "com.squareup.okhttp3:logging-interceptor:4.4.0"
+    implementation "com.squareup.retrofit2:retrofit:$okhttp.retrofit"
+    implementation "com.squareup.retrofit2:converter-gson:$okhttp.retrofit"
+    implementation "com.squareup.retrofit2:adapter-rxjava2:$okhttp.retrofit"
+    implementation "com.squareup.okhttp3:logging-interceptor:$okhttp.version"
 
     //ReactiveX
     implementation "io.reactivex.rxjava2:rxkotlin:$rx.kotlin"

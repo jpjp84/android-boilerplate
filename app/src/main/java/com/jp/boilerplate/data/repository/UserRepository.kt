@@ -6,11 +6,9 @@ import com.jp.boilerplate.data.meta.Result
 
 interface UserRepository {
 
-    fun observable(): LiveData<Result<User>>
+    fun observable(): LiveData<User>
 
-    fun getUser(forceUpdate: Boolean): LiveData<User>
-
-    suspend fun updateUser()
+    fun refreshUser(forceUpdate: Boolean): LiveData<Result<Void>>
 
     suspend fun setUser(user: User)
 }
