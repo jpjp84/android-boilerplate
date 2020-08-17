@@ -35,6 +35,8 @@ class UserRepositoryImpl constructor(
     }
 
     override suspend fun setUser(user: User) {
-        userRemoteDataSource.set(user)
+        userRemoteDataSource.set(user).also {
+            userLocalDataSource.set(it)
+        }
     }
 }

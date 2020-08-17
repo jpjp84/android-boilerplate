@@ -4,5 +4,5 @@ interface BaseDataSource<T> {
 
     suspend fun get(): T
 
-    suspend fun set(it: T)
+    suspend fun set(it: T): T
 }

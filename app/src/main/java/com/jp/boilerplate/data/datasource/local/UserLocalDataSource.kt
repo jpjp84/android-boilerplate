@@ -18,7 +18,8 @@ class UserLocalDataSource constructor(
         return userDao.select()
     }
 
-    override suspend fun set(it: User) {
+    override suspend fun set(it: User): User {
         userDao.insert(it)
+        return it
     }
 }
