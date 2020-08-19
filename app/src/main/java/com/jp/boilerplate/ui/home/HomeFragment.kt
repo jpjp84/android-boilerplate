@@ -7,12 +7,13 @@ import androidx.lifecycle.Observer
 import com.jp.boilerplate.R
 import com.jp.boilerplate.data.meta.Result
 import com.jp.boilerplate.databinding.ActivityMainBinding
+import com.jp.boilerplate.databinding.FragmentHomeBinding
 import com.jp.boilerplate.ui.base.BaseFragment
 import com.orhanobut.logger.Logger
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class HomeFragment : BaseFragment<HomeViewModel, ActivityMainBinding>() {
+class HomeFragment : BaseFragment<HomeViewModel, FragmentHomeBinding>() {
 
     override val viewModel by viewModels<HomeViewModel>()
 
