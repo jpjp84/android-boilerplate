@@ -22,9 +22,9 @@ class UserRepositoryImpl constructor(
                 emit(Result.loading())
                 updateUserByRemote()
             }
-            emit(Result.success())
+            emit(Result.success<Void>())
         } catch (e: Exception) {
-            emit(Result.error(e.message!!))
+            emit(Result.error<Void>(e.message!!))
         }
     }
 

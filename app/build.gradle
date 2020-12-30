@@ -44,9 +44,7 @@ dependencies {
     implementation "androidx.lifecycle:lifecycle-extensions:$androidx.lifecycle"
     implementation "androidx.lifecycle:lifecycle-livedata-ktx:$androidx.lifecycle"
 
-    implementation "androidx.fragment:fragment:$androidx.fragmentVersion"
     implementation "androidx.fragment:fragment-ktx:$androidx.fragmentKtx"
-    implementation "androidx.activity:activity:$androidx.activityVersion"
     implementation "androidx.activity:activity-ktx:$androidx.activityKtx"
 
     implementation 'androidx.navigation:navigation-fragment-ktx:2.3.0'
